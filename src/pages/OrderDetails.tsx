@@ -129,7 +129,7 @@ const OrderDetails = () => {
                 <div className="space-y-4">
                   {order.order_items.map((item, index) => (
                     <div key={index} className="flex items-center gap-4 p-2 rounded-md bg-white/50">
-                      <img src={item.products.image_url} alt={item.products.name} className="w-16 h-16 rounded-md object-cover" />
+                      <img src={item.products.imageUrl} alt={item.products.name} className="w-16 h-16 rounded-md object-cover" />
                       <div className="flex-grow">
                         <p className="font-semibold">{item.products.name}</p>
                         <p className="text-sm text-gray-600">Qty: {item.quantity}</p>

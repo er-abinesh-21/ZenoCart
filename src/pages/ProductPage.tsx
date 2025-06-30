@@ -111,7 +111,7 @@ const ProductPage = () => {
         <div className="bg-white/30 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl p-6 md:p-8">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             <div className="flex items-center justify-center">
-              <img src={product.image_url} alt={product.name} className="w-full max-w-md rounded-xl shadow-lg object-cover" />
+              <img src={product.imageUrl} alt={product.name} className="w-full max-w-md rounded-xl shadow-lg object-cover" />
             </div>
             <div className="flex flex-col justify-center">
               <p className="text-sm text-gray-600 uppercase tracking-wider">{product.category}</p>

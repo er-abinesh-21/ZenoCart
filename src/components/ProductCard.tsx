@@ -37,7 +37,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <Card className="bg-white/30 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl h-full flex flex-col">
       <CardHeader className="p-0">
         <img
-          src={product.image_url}
+          src={product.imageUrl}
           alt={product.name}
           className="w-full h-48 object-cover"
         />
