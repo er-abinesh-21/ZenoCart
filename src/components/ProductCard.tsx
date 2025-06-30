@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button";
 import { Star, ShoppingCart } from "lucide-react";
 import React from "react";
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;

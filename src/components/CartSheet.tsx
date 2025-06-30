@@ -1,8 +1,9 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/context/CartContext";
 import { Button } from "./ui/button";
 import { CartItem } from "./CartItem";
 import { ScrollArea } from "./ui/scroll-area";
+import { Loader2 } from "lucide-react";
 
 interface CartSheetProps {
   isOpen: boolean;
@@ -10,7 +11,7 @@ interface CartSheetProps {
 }
 
 export const CartSheet = ({ isOpen, onOpenChange }: CartSheetProps) => {
-  const { cartItems, totalPrice, totalItems } = useCart();
+  const { cartItems, totalPrice, totalItems, isLoading } = useCart();
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -18,7 +19,12 @@ export const CartSheet = ({ isOpen, onOpenChange }: CartSheetProps) => {
         <SheetHeader>
           <SheetTitle>My Cart ({totalItems})</SheetTitle>
         </SheetHeader>
-        {cartItems.length > 0 ? (
+        {isLoading ? (
+          <div className="flex-grow flex flex-col items-center justify-center text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+            <p className="text-lg font-semibold mt-4">Loading Cart...</p>
+          </div>
+        ) : cartItems.length > 0 ? (
           <>
             <ScrollArea className="flex-grow pr-6 -mr-6">
               <div className="flex flex-col">
