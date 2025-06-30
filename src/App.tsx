@@ -11,14 +11,9 @@ import Account from "./pages/Account";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetails from "./pages/OrderDetails";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminProductManager from "./pages/AdminProductManager";
-import AdminOrderManager from "./pages/AdminOrderManager";
-import AdminOrderDetails from "./pages/AdminOrderDetails";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AdminRoute } from "./components/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -34,22 +29,12 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/login" element={<Login />} />
-              
               <Route element={<ProtectedRoute />}>
                 <Route path="/account" element={<Account />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-history" element={<OrderHistory />} />
                 <Route path="/order/:id" element={<OrderDetails />} />
               </Route>
-
-              <Route path="/admin" element={<AdminRoute />}>
-                <Route path="" element={<AdminDashboard />}>
-                  <Route path="products" element={<AdminProductManager />} />
-                  <Route path="orders" element={<AdminOrderManager />} />
-                  <Route path="order/:id" element={<AdminOrderDetails />} />
-                </Route>
-              </Route>
-              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
