@@ -38,4 +38,5 @@ export interface Profile {
   city: string | null;
   postal_code: string | null;
   country: string | null;
+  role: string;
 }
