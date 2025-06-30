@@ -13,6 +13,8 @@ import OrderHistory from "./pages/OrderHistory";
 import OrderDetails from "./pages/OrderDetails";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProductManager from "./pages/AdminProductManager";
+import AdminOrderManager from "./pages/AdminOrderManager";
+import AdminOrderDetails from "./pages/AdminOrderDetails";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -43,6 +45,8 @@ const App = () => (
               <Route path="/admin" element={<AdminRoute />}>
                 <Route path="" element={<AdminDashboard />}>
                   <Route path="products" element={<AdminProductManager />} />
+                  <Route path="orders" element={<AdminOrderManager />} />
+                  <Route path="orders/:id" element={<AdminOrderDetails />} />
                 </Route>
               </Route>
               
