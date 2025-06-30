@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import ProductPage from "./pages/ProductPage";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
+import Checkout from "./pages/Checkout";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/account" element={<Account />} />
+                <Route path="/checkout" element={<Checkout />} />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

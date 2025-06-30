@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { CartItem } from "./CartItem";
 import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 interface CartSheetProps {
   isOpen: boolean;
@@ -18,6 +19,12 @@ interface CartSheetProps {
 
 export const CartSheet = ({ isOpen, onOpenChange }: CartSheetProps) => {
   const { cartItems, totalPrice, totalItems, isLoading } = useCart();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    onOpenChange(false);
+    navigate('/checkout');
+  };
 
   const renderContent = () => {
     if (isLoading) {
@@ -57,7 +64,7 @@ export const CartSheet = ({ isOpen, onOpenChange }: CartSheetProps) => {
                 <span>Total</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
-              <Button size="lg" className="w-full">
+              <Button size="lg" className="w-full" onClick={handleCheckout}>
                 Checkout
               </Button>
             </div>
