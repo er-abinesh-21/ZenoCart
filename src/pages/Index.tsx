@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { sampleProducts } from "@/data/products";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -24,7 +25,14 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {sampleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                to={`/product/${product.id}`}
+                key={product.id}
+                className="block outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-4 rounded-2xl"
+                aria-label={`View details for ${product.name}`}
+              >
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         </section>
