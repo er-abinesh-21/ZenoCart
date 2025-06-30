@@ -14,7 +14,7 @@ import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 
 export const Header = () => {
   const { totalItems } = useCart();
-  const { session, profile } = useAuth();
+  const { session } = useAuth();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
@@ -38,13 +38,6 @@ export const Header = () => {
                     <NavigationMenuItem>
                       <Link to="/order-history" className={navigationMenuTriggerStyle()}>
                         My Orders
-                      </Link>
-                    </NavigationMenuItem>
-                  )}
-                  {profile?.role === 'admin' && (
-                     <NavigationMenuItem>
-                      <Link to="/admin" className={navigationMenuTriggerStyle()}>
-                        Admin
                       </Link>
                     </NavigationMenuItem>
                   )}
