@@ -74,20 +74,22 @@ const OrderHistory = () => {
                 </>
               ) : orders.length > 0 ? (
                 orders.map((order) => (
-                  <Card key={order.id} className="bg-white/50">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Order #{order.id}</CardTitle>
-                      <CardDescription>
-                        Placed on {new Date(order.created_at).toLocaleDateString()}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex justify-between items-center">
-                      <p className="text-xl font-bold">${order.total_price.toFixed(2)}</p>
-                      <Badge variant={order.status === 'pending' ? 'secondary' : 'default'}>
-                        {order.status}
-                      </Badge>
-                    </CardContent>
-                  </Card>
+                  <Link to={`/order/${order.id}`} key={order.id} className="block outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg">
+                    <Card className="bg-white/50 hover:bg-white/75 transition-colors">
+                      <CardHeader>
+                        <CardTitle className="text-lg">Order #{order.id}</CardTitle>
+                        <CardDescription>
+                          Placed on {new Date(order.created_at).toLocaleDateString()}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex justify-between items-center">
+                        <p className="text-xl font-bold">${order.total_price.toFixed(2)}</p>
+                        <Badge variant={order.status === 'pending' ? 'secondary' : 'default'}>
+                          {order.status}
+                        </Badge>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))
               ) : (
                 <div className="text-center py-12">

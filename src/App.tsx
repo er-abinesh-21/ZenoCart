@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Account from "./pages/Account";
 import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
+import OrderDetails from "./pages/OrderDetails";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -32,6 +33,7 @@ const App = () => (
                 <Route path="/account" element={<Account />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/order/:id" element={<OrderDetails />} />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

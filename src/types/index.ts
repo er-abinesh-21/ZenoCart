@@ -11,9 +11,21 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export interface OrderItem {
+  quantity: number;
+  price: number;
+  products: Product; // Supabase returns the nested product object
+}
+
 export interface Order {
   id: number;
   created_at: string;
   total_price: number;
   status: string;
+  shipping_name: string;
+  shipping_address: string;
+  shipping_city: string;
+  shipping_postal_code: string;
+  shipping_country: string;
+  order_items: OrderItem[];
 }
