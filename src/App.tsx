@@ -12,6 +12,7 @@ import Checkout from "./pages/Checkout";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetails from "./pages/OrderDetails";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminProductManager from "./pages/AdminProductManager";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -39,8 +40,10 @@ const App = () => (
                 <Route path="/order/:id" element={<OrderDetails />} />
               </Route>
 
-              <Route element={<AdminRoute />}>
-                <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin" element={<AdminRoute />}>
+                <Route path="" element={<AdminDashboard />}>
+                  <Route path="products" element={<AdminProductManager />} />
+                </Route>
               </Route>
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
