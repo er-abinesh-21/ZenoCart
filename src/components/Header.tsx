@@ -1,4 +1,4 @@
-import { ShoppingCart, User, Shield } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCart } from "@/hooks/useCart";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Header = () => {
   const { totalItems } = useCart();
-  const { session, profile } = useAuth();
+  const { session } = useAuth();
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
@@ -20,13 +20,6 @@ export const Header = () => {
               ZenoCart
             </Link>
             <div className="flex items-center space-x-4">
-              {profile?.role === 'admin' && (
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to="/admin" title="Admin Dashboard">
-                    <Shield className="h-6 w-6 text-gray-700" />
-                  </Link>
-                </Button>
-              )}
               <Button variant="ghost" size="icon" asChild>
                 <Link to={session ? "/account" : "/login"}>
                   <User className="h-6 w-6 text-gray-700" />
