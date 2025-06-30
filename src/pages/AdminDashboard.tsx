@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Shield, ShoppingBag } from "lucide-react";
+import { Shield, ShoppingBag, ListOrdered } from "lucide-react";
 
 const AdminDashboard = () => {
   return (
@@ -26,6 +26,20 @@ const AdminDashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-indigo-600 font-semibold">Go to Products &rarr;</p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link to="/admin/orders" className="block outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg">
+              <Card className="bg-white/80 hover:bg-white transition-colors h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-2xl">
+                    <ListOrdered className="h-6 w-6" />
+                    Order Management
+                  </CardTitle>
+                  <CardDescription>View and manage all customer orders.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-indigo-600 font-semibold">Go to Orders &rarr;</p>
                 </CardContent>
               </Card>
             </Link>

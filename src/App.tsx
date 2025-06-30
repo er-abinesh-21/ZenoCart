@@ -15,6 +15,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProductManagement from "./pages/admin/ProductManagement";
 import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
+import OrderManagement from "./pages/admin/OrderManagement";
+import AdminOrderDetails from "./pages/admin/AdminOrderDetails";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -47,6 +49,8 @@ const App = () => (
                 <Route path="/admin/products" element={<ProductManagement />} />
                 <Route path="/admin/products/new" element={<AddProduct />} />
                 <Route path="/admin/products/edit/:id" element={<EditProduct />} />
+                <Route path="/admin/orders" element={<OrderManagement />} />
+                <Route path="/admin/order/:id" element={<AdminOrderDetails />} />
               </Route>
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
