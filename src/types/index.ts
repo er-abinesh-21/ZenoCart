@@ -29,3 +29,13 @@ export interface Order {
   shipping_country: string;
   order_items: OrderItem[];
 }
+
+export interface Profile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  address: string | null;
+  city: string | null;
+  postal_code: string | null;
+  country: string | null;
+}

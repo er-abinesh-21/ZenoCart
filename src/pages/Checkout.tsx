@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
 import { useNavigate, Link } from "react-router-dom";
 import { showSuccess, showError, showLoading, dismissToast } from "@/utils/toast";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
 
 const shippingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -23,7 +23,7 @@ const shippingSchema = z.object({
 });
 
 const Checkout = () => {
-  const { cartItems, totalPrice, clearCart, isLoading } = useCart();
+  const { cartItems, totalPrice, clearCart, isLoading: isCartLoading } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -31,6 +31,28 @@ const Checkout = () => {
     resolver: zodResolver(shippingSchema),
     defaultValues: { name: "", address: "", city: "", postalCode: "", country: "" },
   });
+
+  useEffect(() => {
+    const fetchProfileForCheckout = async () => {
+      if (!user) return;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (data) {
+        form.reset({
+          name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+          address: data.address || "",
+          city: data.city || "",
+          postalCode: data.postal_code || "",
+          country: data.country || "",
+        });
+      }
+    };
+    fetchProfileForCheckout();
+  }, [user, form]);
 
   const onSubmit = async (values: z.infer<typeof shippingSchema>) => {
     if (!user || cartItems.length === 0) {
@@ -40,7 +62,6 @@ const Checkout = () => {
 
     const toastId = showLoading("Placing your order...");
 
-    // 1. Create an order in the `orders` table
     const { data: orderData, error: orderError } = await supabase
       .from("orders")
       .insert({
@@ -62,7 +83,6 @@ const Checkout = () => {
       return;
     }
 
-    // 2. Create items in the `order_items` table
     const orderItems = cartItems.map(item => ({
       order_id: orderData.id,
       product_id: item.id,
@@ -73,15 +93,12 @@ const Checkout = () => {
     const { error: itemsError } = await supabase.from("order_items").insert(orderItems);
 
     if (itemsError) {
-      // In a real app, you'd want to handle this more gracefully,
-      // maybe by deleting the created order.
       dismissToast(toastId);
       showError("Could not save order items. Please contact support.");
       console.error("Order items creation error:", itemsError);
       return;
     }
 
-    // 3. Clear the user's cart
     await clearCart();
 
     dismissToast(toastId);
@@ -89,11 +106,11 @@ const Checkout = () => {
     navigate("/");
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>; // Or a proper skeleton loader
+  if (isCartLoading) {
+    return <div>Loading...</div>;
   }
 
-  if (!isLoading && cartItems.length === 0) {
+  if (!isCartLoading && cartItems.length === 0) {
     return (
       <div className="min-h-screen w-full bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col">
         <Header />
