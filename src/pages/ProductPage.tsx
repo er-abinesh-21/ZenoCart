@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Star, ShoppingCart, ArrowLeft } from "lucide-react";
 import NotFound from "./NotFound";
-import { showSuccess } from "@/utils/toast";
+import { useCart } from "@/hooks/useCart";
 
 const renderStars = (rating: number) => {
   const stars = [];
@@ -25,6 +25,7 @@ const renderStars = (rating: number) => {
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
+  const { addToCart } = useCart();
   const product = sampleProducts.find((p) => p.id === id);
 
   if (!product) {
@@ -32,7 +33,7 @@ const ProductPage = () => {
   }
   
   const handleAddToCart = () => {
-    showSuccess(`${product.name} added to cart!`);
+    addToCart(product);
   };
 
   const description = "Experience the best in class with this premium product. Designed for excellence and crafted with care, it delivers unparalleled performance and style. Perfect for those who demand quality and appreciate fine details. Elevate your everyday with this exceptional item.";

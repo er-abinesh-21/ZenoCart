@@ -2,8 +2,8 @@ import { Product } from "@/types";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Star, ShoppingCart } from "lucide-react";
-import { showSuccess } from "@/utils/toast";
 import React from "react";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductCardProps {
   product: Product;
@@ -26,9 +26,11 @@ const renderStars = (rating: number) => {
 };
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    showSuccess(`${product.name} added to cart!`);
+    addToCart(product);
   };
 
   return (
