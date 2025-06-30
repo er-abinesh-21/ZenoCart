@@ -11,20 +11,53 @@ import { supabase } from "@/integrations/supabase/client";
 import { Product } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const Index = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchInitialProducts = async () => {
       setLoading(true);
       const { data, error } = await supabase.from("products").select("*").order('created_at', { ascending: false });
 
       if (error) {
         console.error("Error fetching products:", error);
+        setProducts([]);
+        setAllProducts([]);
+      } else {
+        setProducts(data as Product[]);
+        setAllProducts(data as Product[]);
+      }
+      setLoading(false);
+    };
+
+    fetchInitialProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchFilteredProducts = async () => {
+      setLoading(true);
+      let query = supabase.from("products").select("*").order('created_at', { ascending: false });
+
+      if (selectedCategory !== "All") {
+        query = query.eq('category', selectedCategory);
+      }
+
+      if (debouncedSearchTerm) {
+        query = query.ilike('name', `%${debouncedSearchTerm}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error("Error fetching filtered products:", error);
         setProducts([]);
       } else {
         setProducts(data as Product[]);
@@ -32,25 +65,15 @@ const Index = () => {
       setLoading(false);
     };
 
-    fetchProducts();
-  }, []);
+    // We don't want to run this on initial load, only on changes.
+    if (!loading) {
+      fetchFilteredProducts();
+    }
+  }, [debouncedSearchTerm, selectedCategory]);
 
   const categories = useMemo(() => {
-    if (loading) return [];
-    return ["All", ...Array.from(new Set(products.map((p) => p.category)))];
-  }, [products, loading]);
-
-  const filteredProducts = useMemo(() => {
-    if (loading) return [];
-    return products.filter((product) => {
-      const matchesCategory =
-        selectedCategory === "All" || product.category === selectedCategory;
-      const matchesSearch = product.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [searchTerm, selectedCategory, products, loading]);
+    return ["All", ...Array.from(new Set(allProducts.map((p) => p.category)))];
+  }, [allProducts]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
@@ -107,9 +130,9 @@ const Index = () => {
                   </Card>
                 ))}
               </div>
-            ) : filteredProducts.length > 0 ? (
+            ) : products.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map((product) => (
+                {products.map((product) => (
                   <Link
                     to={`/product/${product.id}`}
                     key={product.id}
