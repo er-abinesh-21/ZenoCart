@@ -5,6 +5,12 @@ import { useState } from "react";
 import { CartSheet } from "./CartSheet";
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 
 export const Header = () => {
   const { totalItems } = useCart();
@@ -19,6 +25,26 @@ export const Header = () => {
             <Link to="/" className="text-2xl font-bold text-gray-800">
               ZenoCart
             </Link>
+
+            <div className="hidden md:block">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <Link to="/" className={navigationMenuTriggerStyle()}>
+                      Home
+                    </Link>
+                  </NavigationMenuItem>
+                  {session && (
+                    <NavigationMenuItem>
+                      <Link to="/order-history" className={navigationMenuTriggerStyle()}>
+                        My Orders
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="icon" asChild>
                 <Link to={session ? "/account" : "/login"}>
