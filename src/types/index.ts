@@ -5,6 +5,7 @@ export interface Product {
   price: number;
   rating: number;
   imageUrl: string;
+  description: string;
 }
 
 export interface CartItem extends Product {
@@ -38,4 +39,5 @@ export interface Profile {
   city: string | null;
   postal_code: string | null;
   country: string | null;
+  role: 'user' | 'admin';
 }

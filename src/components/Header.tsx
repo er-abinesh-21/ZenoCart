@@ -1,4 +1,4 @@
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User, Shield } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCart } from "@/hooks/useCart";
 import { useState } from "react";
@@ -9,13 +9,16 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
+  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { useAdmin } from "@/hooks/useAdmin";
 
 export const Header = () => {
   const { totalItems } = useCart();
   const { session } = useAuth();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { isAdmin } = useAdmin();
 
   return (
     <>
@@ -38,6 +41,14 @@ export const Header = () => {
                     <NavigationMenuItem>
                       <Link to="/order-history" className={navigationMenuTriggerStyle()}>
                         My Orders
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
+                  {isAdmin && (
+                     <NavigationMenuItem>
+                      <Link to="/admin" className={navigationMenuTriggerStyle()}>
+                        <Shield className="h-4 w-4 mr-1" />
+                        Admin
                       </Link>
                     </NavigationMenuItem>
                   )}

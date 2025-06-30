@@ -94,8 +94,6 @@ const ProductPage = () => {
     addToCart(product);
   };
 
-  const description = "Experience the best in class with this premium product. Designed for excellence and crafted with care, it delivers unparalleled performance and style. Perfect for those who demand quality and appreciate fine details. Elevate your everyday with this exceptional item.";
-
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
       <Header />
@@ -120,7 +118,7 @@ const ProductPage = () => {
                 {renderStars(product.rating)}
                 <span className="text-sm text-gray-500 ml-3">({product.rating} rating)</span>
               </div>
-              <p className="text-gray-700 mt-6 leading-relaxed">{description}</p>
+              <p className="text-gray-700 mt-6 leading-relaxed">{product.description || "No description available."}</p>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-8 gap-6">
                 <p className="text-4xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
                 <Button size="lg" className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white rounded-full text-lg px-8 py-6" onClick={handleAddToCart}>
