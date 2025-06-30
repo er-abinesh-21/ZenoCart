@@ -1,24 +1,48 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { sampleProducts } from "@/data/products";
 import { Link } from "react-router-dom";
 import { HeroSection } from "@/components/HeroSection";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Product } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 const Index = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = useMemo(() => {
-    return ["All", ...Array.from(new Set(sampleProducts.map((p) => p.category)))];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.from("products").select("*").order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      } else {
+        setProducts(data as Product[]);
+      }
+      setLoading(false);
+    };
+
+    fetchProducts();
   }, []);
 
+  const categories = useMemo(() => {
+    if (loading) return [];
+    return ["All", ...Array.from(new Set(products.map((p) => p.category)))];
+  }, [products, loading]);
+
   const filteredProducts = useMemo(() => {
-    return sampleProducts.filter((product) => {
+    if (loading) return [];
+    return products.filter((product) => {
       const matchesCategory =
         selectedCategory === "All" || product.category === selectedCategory;
       const matchesSearch = product.name
@@ -26,7 +50,7 @@ const Index = () => {
         .includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, products, loading]);
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
@@ -64,7 +88,26 @@ const Index = () => {
               ))}
             </div>
 
-            {filteredProducts.length > 0 ? (
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Card key={i} className="bg-white/30 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl overflow-hidden h-full flex flex-col">
+                    <CardHeader className="p-0">
+                      <Skeleton className="w-full h-48" />
+                    </CardHeader>
+                    <CardContent className="p-4 flex-grow space-y-2">
+                      <Skeleton className="h-4 w-1/4" />
+                      <Skeleton className="h-6 w-3/4" />
+                      <Skeleton className="h-4 w-1/3" />
+                    </CardContent>
+                    <CardFooter className="p-4 flex justify-between items-center mt-auto">
+                      <Skeleton className="h-8 w-1/3" />
+                      <Skeleton className="h-10 w-1/2 rounded-full" />
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProducts.map((product) => (
                   <Link

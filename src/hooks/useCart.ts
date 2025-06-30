@@ -15,11 +15,11 @@ export const useCart = () => {
     showSuccess(`${product.name} added to cart!`);
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: number) => {
     dispatch({ type: "REMOVE_ITEM", payload: { id } });
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: number, quantity: number) => {
     dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
   };
 

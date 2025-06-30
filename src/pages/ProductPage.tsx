@@ -1,11 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import { sampleProducts } from "@/data/products";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Star, ShoppingCart, ArrowLeft } from "lucide-react";
 import NotFound from "./NotFound";
 import { useCart } from "@/hooks/useCart";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Product } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const renderStars = (rating: number) => {
   const stars = [];
@@ -26,7 +29,62 @@ const renderStars = (rating: number) => {
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
-  const product = sampleProducts.find((p) => p.id === id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!id) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", parseInt(id, 10))
+        .single();
+
+      if (error) {
+        console.error("Error fetching product:", error);
+        setProduct(null);
+      } else {
+        setProduct(data as Product);
+      }
+      setLoading(false);
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
+        <Header />
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+          <div className="mb-8">
+            <Skeleton className="h-10 w-48 rounded-md" />
+          </div>
+          <div className="bg-white/30 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl p-6 md:p-8">
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+              <Skeleton className="w-full h-96 rounded-xl" />
+              <div className="flex flex-col justify-center space-y-6">
+                <Skeleton className="h-6 w-1/4" />
+                <Skeleton className="h-10 w-3/4" />
+                <Skeleton className="h-6 w-1/3" />
+                <Skeleton className="h-24 w-full" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-8 gap-6">
+                  <Skeleton className="h-12 w-1/3" />
+                  <Skeleton className="h-16 w-full sm:w-auto rounded-full px-8 py-6" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!product) {
     return <NotFound />;
