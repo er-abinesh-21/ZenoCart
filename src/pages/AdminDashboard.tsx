@@ -3,7 +3,6 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import AdminProductManager from "./AdminProductManager";
 
 const AdminDashboard = () => {
   const location = useLocation();
@@ -39,7 +38,9 @@ const AdminDashboard = () => {
                       <CardDescription>Review and manage customer orders.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Button disabled>Coming Soon</Button>
+                       <Button asChild>
+                        <Link to="/admin/orders">Go to Orders</Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 </div>
