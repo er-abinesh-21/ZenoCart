@@ -16,7 +16,7 @@ const AdminDashboard = () => {
           <Card className="bg-white/50 backdrop-blur-lg border border-white/20 shadow-lg">
             <CardHeader>
               <CardTitle className="text-3xl">Admin Dashboard</CardTitle>
-              <CardDescription>Manage your store's products, orders, and users.</CardDescription>
+              <CardDescription>Manage your store's products and users.</CardDescription>
             </CardHeader>
             <CardContent>
               {isRootAdmin ? (
@@ -29,17 +29,6 @@ const AdminDashboard = () => {
                     <CardContent>
                       <Button asChild>
                         <Link to="/admin/products">Go to Products</Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Manage Orders</CardTitle>
-                      <CardDescription>View and update customer orders.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Button asChild>
-                        <Link to="/admin/orders">Go to Orders</Link>
                       </Button>
                     </CardContent>
                   </Card>
