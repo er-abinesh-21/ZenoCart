@@ -5,8 +5,11 @@ import { showError, showSuccess, showLoading, dismissToast } from "@/utils/toast
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ShieldCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const GrantAdmin = () => {
+  const navigate = useNavigate();
+
   const handleGrantAdmin = async () => {
     const toastId = showLoading("Granting admin privileges...");
     const { error } = await supabase.rpc('grant_admin_privileges');
@@ -16,7 +19,12 @@ const GrantAdmin = () => {
       showError("Failed to grant admin privileges. Please contact support.");
       console.error("RPC error:", error);
     } else {
-      showSuccess("Admin privileges granted! You should now have access to admin features.");
+      showSuccess("Admin privileges granted! Redirecting to the admin dashboard...");
+      // We use a timeout to allow the user to see the toast message.
+      // Then, we do a hard navigation to force the app to re-check auth state.
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 2000);
     }
   };
 
