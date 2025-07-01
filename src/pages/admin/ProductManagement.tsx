@@ -97,7 +97,7 @@ const ProductManagement = () => {
                   {loading ? renderSkeleton() : products.map((product) => (
                     <TableRow key={product.id}>
                       <TableCell>
-                        <img src={product.imageUrl} alt={product.name} className="w-10 h-10 object-cover rounded-md" />
+                        <img src={product.image_url} alt={product.name} className="w-10 h-10 object-cover rounded-md" />
                       </TableCell>
                       <TableCell className="font-medium">{product.name}</TableCell>
                       <TableCell>{product.category}</TableCell>

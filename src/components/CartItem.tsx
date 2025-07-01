@@ -14,7 +14,7 @@ export const CartItem = ({ item }: CartItemProps) => {
   return (
     <div className="flex items-center justify-between py-4 border-b">
       <div className="flex items-center gap-4">
-        <img src={item.imageUrl} alt={item.name} className="w-16 h-16 rounded-md object-cover" />
+        <img src={item.image_url} alt={item.name} className="w-16 h-16 rounded-md object-cover" />
         <div>
           <h4 className="font-semibold">{item.name}</h4>
           <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>

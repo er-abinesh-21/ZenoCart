@@ -16,7 +16,7 @@ const productSchema = z.object({
   category: z.string().min(2, "Category is required"),
   price: z.coerce.number().min(0.01, "Price must be positive"),
   rating: z.coerce.number().min(0).max(5).optional().default(0),
-  imageUrl: z.string().url("Must be a valid URL"),
+  image_url: z.string().url("Must be a valid URL"),
 });
 
 interface ProductFormProps {
@@ -35,7 +35,7 @@ export const ProductForm = ({ product }: ProductFormProps) => {
       category: product?.category || "",
       price: product?.price || 0,
       rating: product?.rating || 0,
-      imageUrl: product?.imageUrl || "",
+      image_url: product?.image_url || "",
     },
   });
 
@@ -92,7 +92,7 @@ export const ProductForm = ({ product }: ProductFormProps) => {
             </FormItem>
           )} />
         </div>
-        <FormField control={form.control} name="imageUrl" render={({ field }) => (
+        <FormField control={form.control} name="image_url" render={({ field }) => (
           <FormItem>
             <FormLabel>Image URL</FormLabel>
             <FormControl><Input {...field} /></FormControl>
