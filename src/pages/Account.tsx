@@ -181,6 +181,13 @@ const Account = () => {
                 <p className="text-gray-700">
                   <span className="font-semibold">Email:</span> {user?.email}
                 </p>
+                {loading ? (
+                  <Skeleton className="h-5 w-24" />
+                ) : profile ? (
+                  <p className="text-gray-700">
+                    <span className="font-semibold">Role:</span> <span className="font-mono bg-gray-200 text-gray-800 px-2 py-1 rounded-md">{profile.role}</span>
+                  </p>
+                ) : null}
                 <Button asChild>
                   <Link to="/order-history">View Order History</Link>
                 </Button>
