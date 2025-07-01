@@ -17,6 +17,7 @@ import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
 import OrderManagement from "./pages/admin/OrderManagement";
 import AdminOrderDetails from "./pages/admin/AdminOrderDetails";
+import GrantAdmin from "./pages/GrantAdmin";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -54,6 +55,7 @@ const App = () => (
               </Route>
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="/grant-admin" element={<GrantAdmin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CartProvider>
