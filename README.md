@@ -48,9 +48,9 @@ This project was built using a modern, scalable, and efficient tech stack, repla
 | **State Management**   | React Context API                                                                                      |
 | **Icons**              | [**Lucide React**](https://lucide.dev/)                                                                |
 
-##Screenshot of ZenoCart
+## Screenshot of ZenoCart
 
-###Homepage
+### Homepage
 ![Screenshot 2025-07-06 181631](https://github.com/user-attachments/assets/90aae995-8c8d-456b-a648-7969649750f8)
 
 
