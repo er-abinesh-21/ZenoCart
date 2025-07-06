@@ -19,7 +19,7 @@ export const HeroSection = () => {
       <motion.div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop)`,
+          backgroundImage: `url(https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?q=80&w=1200&auto=format&fit=crop)`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           y,
