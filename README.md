@@ -1,7 +1,12 @@
 
 # ZenoCart: Advanced E-Commerce Web App
 
-![ZenoCart Hero Section](https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop)
+![ZenoCart Hero Section](https://github.com/user-attachments/assets/52d8b272-ce26-4cbd-ac7a-67544ff05ef4)
+
+ <h1 align="center">
+  <a href="https://zeno-cart.vercel.app/"><strong>Live Demo</strong></a>  
+  </h1>
+
 
 ZenoCart is a modern, full-featured e-commerce web application built with a focus on a clean user experience, featuring a sleek **Glassmorphism** UI and smooth **Parallax Scrolling Effects**. It provides a robust platform for both customers and administrators.
 
@@ -43,6 +48,12 @@ This project was built using a modern, scalable, and efficient tech stack, repla
 | **State Management**   | React Context API                                                                                      |
 | **Icons**              | [**Lucide React**](https://lucide.dev/)                                                                |
 
+##Screenshot of ZenoCart
+
+###Homepage
+![Screenshot 2025-07-06 181631](https://github.com/user-attachments/assets/90aae995-8c8d-456b-a648-7969649750f8)
+
+
 ## 🚀 Getting Started
 
 To get a local copy up and running, follow these simple steps.
@@ -56,8 +67,8 @@ To get a local copy up and running, follow these simple steps.
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/zenocart.git
-   cd zenocart
+   git clone https://github.com/er-abinesh-21/ZenoCart.git
+   cd ZenoCart
    ```
 
 2. **Install NPM packages:**
