@@ -59,7 +59,7 @@ This project was built using a modern, scalable, and efficient tech stack, repla
 ### My Profile
 ![Screenshot 2025-07-06 182702](https://github.com/user-attachments/assets/26e35ec4-a704-4534-ac5d-928b13a021d3)
 
-## ADMIN PAGES
+## Admin Pages
 ### Admin Dashboard
 ![Screenshot 2025-07-06 182904](https://github.com/user-attachments/assets/9ec50df9-8a21-410a-a9bc-ab82e2bf2d76)
 ### Product Management
