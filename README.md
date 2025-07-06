@@ -48,11 +48,26 @@ This project was built using a modern, scalable, and efficient tech stack, repla
 | **State Management**   | React Context API                                                                                      |
 | **Icons**              | [**Lucide React**](https://lucide.dev/)                                                                |
 
-## Screenshot of ZenoCart
-
+## Screenshots of ZenoCart
+## User Pages
 ### Homepage
 ![Screenshot 2025-07-06 181631](https://github.com/user-attachments/assets/90aae995-8c8d-456b-a648-7969649750f8)
+### Products Page
+![Screenshot 2025-07-06 182459](https://github.com/user-attachments/assets/b0c97e15-1ef1-4b31-9219-8b17446efb77)
+### Order Page
+![Screenshot 2025-07-06 182518](https://github.com/user-attachments/assets/dcf5cf9d-c2f2-4261-bdf6-ca47ba9e36be)
+### My Profile
+![Screenshot 2025-07-06 182702](https://github.com/user-attachments/assets/26e35ec4-a704-4534-ac5d-928b13a021d3)
 
+## ADMIN PAGES
+### Admin Dashboard
+![Screenshot 2025-07-06 182904](https://github.com/user-attachments/assets/9ec50df9-8a21-410a-a9bc-ab82e2bf2d76)
+### Product Management
+![Screenshot 2025-07-06 182920](https://github.com/user-attachments/assets/9e627f5a-0818-490a-8e91-86ba6670ef6f)
+### Add or Update Product
+![Screenshot 2025-07-06 182954](https://github.com/user-attachments/assets/968e48d7-d52a-4326-8489-a044ab203b01)
+### Order Management
+![Screenshot 2025-07-06 182928](https://github.com/user-attachments/assets/06a5c13b-7b6d-4dc7-808d-cb9a56d1d088)
 
 ## 🚀 Getting Started
 
