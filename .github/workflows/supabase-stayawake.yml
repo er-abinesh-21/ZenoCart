@@ -28,8 +28,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          cat << 'EOF' > keepalive.js
-          const { createClient } = require('@supabase/supabase-js');
+          cat << 'EOF' > keepalive.mjs
+          import { createClient } from '@supabase/supabase-js';
           
           const supabaseUrl = process.env.VITE_SUPABASE_URL;
           const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
@@ -71,7 +71,7 @@ jobs:
           keepAlive();
           EOF
           
-          node keepalive.js
+          node keepalive.mjs
       
       - name: Create Activity Log
         if: success()
