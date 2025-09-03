@@ -47,13 +47,13 @@ jobs:
             method: 'GET',
             headers: {
               'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
               'Content-Type': 'application/json'
             }
           };
           
           const req = https.request(options, (res) => {
-            console.log(`Status Code: ${res.statusCode}`);
+            console.log('Status Code: ' + res.statusCode);
             
             let data = '';
             res.on('data', (chunk) => {
@@ -62,7 +62,7 @@ jobs:
             
             res.on('end', () => {
               console.log('Supabase keep-alive query executed successfully');
-              console.log(`Response: ${data.substring(0, 100)}...`);
+              console.log('Response: ' + data.substring(0, 100) + '...');
             });
           });
           

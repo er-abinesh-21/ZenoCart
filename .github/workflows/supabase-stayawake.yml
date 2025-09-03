@@ -24,19 +24,19 @@ jobs:
         run: |
           npm install @supabase/supabase-js
       
-      - name: Ping Supabase Database
+      - name: Create and Run Keep-Alive Script
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          node -e "
+          cat << 'EOF' > keepalive.js
           const { createClient } = require('@supabase/supabase-js');
           
           const supabaseUrl = process.env.VITE_SUPABASE_URL;
           const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
           
           if (!supabaseUrl || !supabaseKey) {
-            console.error('❌ Missing Supabase credentials in GitHub Secrets');
+            console.error('Missing Supabase credentials in GitHub Secrets');
             process.exit(1);
           }
           
@@ -51,26 +51,28 @@ jobs:
                 .limit(1);
               
               if (error) {
-                console.error('❌ Query failed:', error.message);
+                console.error('Query failed:', error.message);
                 process.exit(1);
               }
               
-              console.log('✅ Supabase database pinged successfully');
-              console.log('📊 Query returned:', data ? data.length : 0, 'row(s)');
-              console.log('⏰ Timestamp:', new Date().toISOString());
+              console.log('Supabase database pinged successfully');
+              console.log('Query returned:', data ? data.length : 0, 'row(s)');
+              console.log('Timestamp:', new Date().toISOString());
               
               // Optional: Test auth service
-              const { data: { user } } = await supabase.auth.getUser();
-              console.log('🔐 Auth service status: Active');
+              const { data: authData } = await supabase.auth.getUser();
+              console.log('Auth service status: Active');
               
             } catch (err) {
-              console.error('❌ Unexpected error:', err);
+              console.error('Unexpected error:', err);
               process.exit(1);
             }
           }
           
           keepAlive();
-          "
+          EOF
+          
+          node keepalive.js
       
       - name: Create Activity Log
         if: success()
