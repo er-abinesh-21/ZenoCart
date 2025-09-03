@@ -73,6 +73,9 @@ This project was built using a modern, scalable, and efficient tech stack, repla
 
 To get a local copy up and running, follow these simple steps.
 
+### Supabase Keep-Alive (Prevent Free Tier Pausing)
+This project includes GitHub Actions workflows to prevent Supabase free tier from pausing. See [Supabase Keep-Alive Setup Guide](./docs/SUPABASE_KEEPALIVE.md) for configuration instructions.
+
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm or yarn

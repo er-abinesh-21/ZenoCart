@@ -1,0 +1,83 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    # Run every 6 days to prevent Supabase from pausing (free tier pauses after 7 days of inactivity)
+    - cron: '0 0 */6 * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Keep Supabase Active
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          # Create a simple Node.js script to query the database
+          cat << 'EOF' > keepalive.js
+          const https = require('https');
+          
+          const SUPABASE_URL = process.env.SUPABASE_URL;
+          const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+          
+          if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+            console.error('Missing Supabase credentials');
+            process.exit(1);
+          }
+          
+          // Extract the project ID from the URL
+          const projectUrl = new URL(SUPABASE_URL);
+          const hostname = projectUrl.hostname;
+          
+          // Make a simple query to keep the database active
+          const options = {
+            hostname: hostname,
+            path: '/rest/v1/products?select=id&limit=1',
+            method: 'GET',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            }
+          };
+          
+          const req = https.request(options, (res) => {
+            console.log(`Status Code: ${res.statusCode}`);
+            
+            let data = '';
+            res.on('data', (chunk) => {
+              data += chunk;
+            });
+            
+            res.on('end', () => {
+              console.log('Supabase keep-alive query executed successfully');
+              console.log(`Response: ${data.substring(0, 100)}...`);
+            });
+          });
+          
+          req.on('error', (error) => {
+            console.error('Error:', error);
+            process.exit(1);
+          });
+          
+          req.end();
+          EOF
+          
+          # Run the keep-alive script
+          node keepalive.js
+      
+      - name: Log Success
+        run: |
+          echo "✅ Supabase keep-alive completed at $(date)"
+          echo "Next run scheduled in 6 days"

@@ -1,0 +1,83 @@
+name: Supabase Stay Awake
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every 5 days
+    - cron: '0 0 */5 * *'
+  workflow_dispatch: # Manual trigger option
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install Supabase client
+        run: |
+          npm install @supabase/supabase-js
+      
+      - name: Ping Supabase Database
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          node -e "
+          const { createClient } = require('@supabase/supabase-js');
+          
+          const supabaseUrl = process.env.VITE_SUPABASE_URL;
+          const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
+          
+          if (!supabaseUrl || !supabaseKey) {
+            console.error('❌ Missing Supabase credentials in GitHub Secrets');
+            process.exit(1);
+          }
+          
+          const supabase = createClient(supabaseUrl, supabaseKey);
+          
+          async function keepAlive() {
+            try {
+              // Simple query to keep database active
+              const { data, error } = await supabase
+                .from('products')
+                .select('id')
+                .limit(1);
+              
+              if (error) {
+                console.error('❌ Query failed:', error.message);
+                process.exit(1);
+              }
+              
+              console.log('✅ Supabase database pinged successfully');
+              console.log('📊 Query returned:', data ? data.length : 0, 'row(s)');
+              console.log('⏰ Timestamp:', new Date().toISOString());
+              
+              // Optional: Test auth service
+              const { data: { user } } = await supabase.auth.getUser();
+              console.log('🔐 Auth service status: Active');
+              
+            } catch (err) {
+              console.error('❌ Unexpected error:', err);
+              process.exit(1);
+            }
+          }
+          
+          keepAlive();
+          "
+      
+      - name: Create Activity Log
+        if: success()
+        run: |
+          echo "## Supabase Stay Awake Log" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Next Run**: In 5 days" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This workflow prevents Supabase free tier from pausing due to inactivity." >> $GITHUB_STEP_SUMMARY
