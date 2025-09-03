@@ -57,10 +57,10 @@ Two workflow files are available:
 Edit the cron expression in the workflow file:
 ```yaml
 schedule:
-  - cron: '0 0 */5 * *'  # Every 5 days
+  - cron: '0 */5 * * *'  # Every 5 hours
   # Examples:
-  # - cron: '0 0 */3 * *'  # Every 3 days
-  # - cron: '0 12 */7 * *' # Every 7 days at noon
+  # - cron: '0 */3 * *'  # Every 3 hours
+  # - cron: '0 */7 * *' # Every 7 hours
 ```
 
 ### Add More Tables to Query

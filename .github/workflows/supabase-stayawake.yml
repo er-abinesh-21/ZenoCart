@@ -3,7 +3,7 @@ name: Supabase Stay Awake
 on:
   schedule:
     # Runs at 00:00 UTC every 5 days
-    - cron: '0 0 */5 * *'
+    - cron: '0 */5 * * *'
   workflow_dispatch: # Manual trigger option
 
 jobs:
