@@ -3,7 +3,7 @@ name: Supabase Keep Alive
 on:
   schedule:
     # Run every 6 days to prevent Supabase from pausing (free tier pauses after 7 days of inactivity)
-    - cron: '0 */6 * * *'
+    - cron: '0 0 */6 * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,7 +21,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          # Create a simple Node.js script to query the database
+          # Create a CommonJS script file with .cjs extension
           cat << 'EOF' > keepalive.cjs
           const https = require('https');
           
@@ -74,7 +71,7 @@ jobs:
           req.end();
           EOF
           
-          # Run the keep-alive script
+          # Run the CommonJS script with explicit .cjs extension
           node keepalive.cjs
       
       - name: Log Success
