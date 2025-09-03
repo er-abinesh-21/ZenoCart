@@ -25,7 +25,7 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           # Create a simple Node.js script to query the database
-          cat << 'EOF' > keepalive.js
+          cat << 'EOF' > keepalive.cjs
           const https = require('https');
           
           const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -75,7 +75,7 @@ jobs:
           EOF
           
           # Run the keep-alive script
-          node keepalive.js
+          node keepalive.cjs
       
       - name: Log Success
         run: |
